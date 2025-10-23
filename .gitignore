@@ -1,0 +1,12 @@
+.vscode/
+# Archivos de salida de la compilación
+*.o
+*.obj
+*.elf
+*.axf
+*.bin
+*.hex
+*.map
+*.srec
+*.sy
+*.d
