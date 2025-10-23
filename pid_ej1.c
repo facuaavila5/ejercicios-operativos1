@@ -1,6 +1,4 @@
 /*
-💻 Ejercicio 1: “Hola, soy tu hijo”
-
 Descripción:
 El proceso padre crea un hijo y ambos imprimen sus PID.
 
@@ -10,7 +8,8 @@ Usa fork().
 
 En el hijo, imprime su PID y el del padre (getpid(), getppid()).
 
-En el padre, espera al hijo con wait().*/
+En el padre, espera al hijo con wait().
+*/
 
 #include <signal.h>
 #include <stdio.h>

@@ -1,5 +1,6 @@
 /*
  * Ejercicio 2: “Crea 3 hijos secuencialmente”
+ *
  * Descripción:
  * El proceso padre crea 3 hijos, uno por uno, y espera a que cada uno termine antes de crear el siguiente.
  */
