@@ -10,3 +10,12 @@
 *.srec
 *.sy
 *.d
+
+# Ignora todos los archivos .o dentro de tp2 y CUALQUIER subcarpeta de tp2
+tp2/**/*.o
+
+# Ignora el ejecutable por defecto "a.out" solo si está en la raíz de tp2
+tp2/a.out
+
+# Opcional: Si quieres ignorar "a.out" en CUALQUIER subcarpeta de tp2
+# tp2/**/a.out
