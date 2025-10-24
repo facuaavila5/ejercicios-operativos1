@@ -1,0 +1,121 @@
+
+💻 Ejercicio 1: “Hola, soy tu hijo”
+
+Descripción:
+El proceso padre crea un hijo y ambos imprimen sus PID.
+
+Pistas:
+
+Usa fork().
+
+En el hijo, imprime su PID y el del padre (getpid(), getppid()).
+
+En el padre, espera al hijo con wait().
+
+=========================================
+=========================================
+
+Ejercicio 2: “Crea 3 hijos secuencialmente”
+Descripción:
+El proceso padre crea 3 hijos, uno por uno, y espera a que cada uno termine antes de crear el siguiente.
+
+=========================================
+=========================================
+
+Ejercicio 3: “Crea varios hijos en paralelo”
+Descripción:
+El padre crea N hijos (por ejemplo 5), todos se ejecutan al mismo tiempo, y el padre espera a que terminen todos.
+Pistas:
+Usa un bucle for con fork().
+El padre usa un bucle con wait(NULL) para reapearlos.
+Los hijos imprimen mensajes diferentes (por ejemplo, “Soy el hijo 1”).
+
+=========================================
+=========================================
+Ejercicio 4: “Comunicación con señales”
+Descripción:
+El padre crea un hijo. Luego le envía una señal (SIGUSR1) al hijo, y el hijo reacciona con un handler.
+Pistas:
+Instalar signal(SIGUSR1, handler) en el hijo.
+El padre hace kill(pid_hijo, SIGUSR1).
+El handler imprime “Recibí una señal del padre”.
+
+=========================================
+=========================================
+
+💻 Ejercicio 5: “Terminar hijo con SIGTERM”
+
+Descripción:
+El padre crea un hijo que entra en un bucle infinito. Luego de 5 segundos, el padre lo termina con SIGTERM.
+
+Pistas:
+
+Usa sleep(5) en el padre.
+
+Usa signal(SIGTERM, handler) en el hijo para despedirse.
+
+El padre hace kill(pid, SIGTERM).
+
+=========================================
+=========================================
+
+💻 Ejercicio 6: “Evitar zombies”
+
+Descripción:
+Crea un hijo que termina solo. El padre no usa wait(), sino un handler de SIGCHLD para limpiar el proceso.
+
+Pistas:
+
+Instalar signal(SIGCHLD, handler).
+
+En el handler, llamar a wait(NULL).
+
+=========================================
+=========================================
+
+💻 Ejercicio 7: “Múltiples hijos + SIGCHLD”
+
+Descripción:
+El padre crea varios hijos. Cada hijo termina después de un tiempo aleatorio (con sleep(rand()%5)), y el padre los limpia automáticamente con el handler.
+
+Pistas:
+
+Usa signal(SIGCHLD, handler).
+
+Dentro del handler, usar while (waitpid(-1, NULL, WNOHANG) > 0); para limpiar varios hijos de una sola vez.
+
+=========================================
+=========================================
+
+💻 Ejercicio 8: “Ejecutar un comando externo”
+
+Descripción:
+El programa pide al usuario un comando, crea un proceso hijo, y en el hijo ejecuta el comando con execvp().
+
+=========================================
+=========================================
+
+💻 Ejercicio 9: “Shell con Ctrl+C manejado”
+
+Descripción:
+Implementar una shell básica donde Ctrl+C (SIGINT) no mata a la shell, pero sí mata al proceso hijo que se esté ejecutando.
+
+Pistas:
+
+Ignorar SIGINT en el proceso padre (signal(SIGINT, SIG_IGN)).
+
+Restaurar el comportamiento por defecto (SIG_DFL) en el hijo antes de ejecutar execvp().
+
+=========================================
+=========================================
+
+💻 Ejercicio 10: “Shell con procesos en background”
+
+Descripción:
+Permitir ejecutar comandos con & al final (como sleep 5 &) que no bloqueen la shell.
+
+Pistas:
+
+Si el comando termina con &, no hagas wait() en el padre.
+
+Instalar signal(SIGCHLD, handler) para limpiar los hijos terminados.
