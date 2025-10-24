@@ -13,6 +13,7 @@
 
 # Ignora todos los archivos .o dentro de tp2 y CUALQUIER subcarpeta de tp2
 tp2/**/*.o
+tp2/resoluciones/procesos y signals/*.o
 
 # Ignora el ejecutable por defecto "a.out" solo si está en la raíz de tp2
 tp2/a.out
