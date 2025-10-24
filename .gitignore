@@ -1,5 +1,7 @@
+# Directorios de IDEs/Editores
 .vscode/
-# Archivos de salida de la compilación
+
+# Archivos de salida de la compilacion (generales)
 *.o
 *.obj
 *.elf
@@ -11,12 +13,14 @@
 *.sy
 *.d
 
-# Ignora todos los archivos .o dentro de tp2 y CUALQUIER subcarpeta de tp2
+# Archivos de compilacion especificos de tu estructura
+# Ignora todos los archivos .o recursivamente dentro de tp2
 tp2/**/*.o
-tp2/resoluciones/procesos y signals/*.o
 
-# Ignora el ejecutable por defecto "a.out" solo si está en la raíz de tp2
-tp2/a.out
+# Ignora cualquier ejecutable 'a.out' recursivamente dentro de tp2
+tp2/**/a.out
 
-# Opcional: Si quieres ignorar "a.out" en CUALQUIER subcarpeta de tp2
-# tp2/**/a.out
+# Si generas ejecutables con otros nombres específicos (ej: 'ej1', 'ej2'),
+# necesitarías añadirlos aquí también, o usar una convención.
+# Por ejemplo, si tus ejecutables se llaman igual que el .c pero sin la extensión:
+tp2/**/pid_ej*
