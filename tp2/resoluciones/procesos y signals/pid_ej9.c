@@ -10,9 +10,9 @@ Ignorar SIGINT en el proceso padre (signal(SIGINT, SIG_IGN)).
 
 Restaurar el comportamiento por defecto (SIG_DFL) en el hijo antes de ejecutar execvp().
 */
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <string.h>
@@ -23,6 +23,11 @@ Restaurar el comportamiento por defecto (SIG_DFL) en el hijo antes de ejecutar e
 int cli_interface(void);
 int scan_command(char command[], char *[]);
 
+void handler(int sig) {
+    printf("\nRecibí Ctrl+C, adios...\n");
+    exit(0);
+}
+
 int main(void) {
     char user_input[MAX_CMD_LENGTH];
     char *words_scanned[MAX_WORDS];
@@ -30,6 +35,7 @@ int main(void) {
     printf("==============================\n");
     printf("Custom shell by Facundo Avila\n");
     printf("==============================\n\n");
+    signal(SIGINT, SIG_IGN); // Ignore Ctrl + C signal
 
     while(1) {
         do {
@@ -38,13 +44,21 @@ int main(void) {
             fgets(user_input, MAX_CMD_LENGTH, stdin);
         } while(user_input == NULL || user_input[0] == '\n'); // Avoid scanning \n
         
-        scan_command(user_input, words_scanned);
-        execvp(words_scanned[0], words_scanned);
-
-        // printf("scanned = %s\n", user_input);
+        pid_t pid = fork();
+        if(pid == 0) {
+            signal(SIGINT, handler);
+            scan_command(user_input, words_scanned);
+            execvp(words_scanned[0], words_scanned); // TODO: if word != command, print "command not found"
+            // if command is valid, skip lines from here
+            printf("zsh: command not found: %s\n", words_scanned[0]); 
+            exit(0);
+        }
+        else {
+            wait(NULL);
+        }
+        
     }
     
-
     return 0;
 }
 

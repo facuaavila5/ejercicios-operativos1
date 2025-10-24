@@ -21,6 +21,9 @@ int main(void) {
     pid_t pid = fork();
 
     if(pid == 0) {
+        /*
+         * NOTA! ChatGPT recomienda utilizar sigaction() en lugar de signal
+         */
         signal(SIGUSR1, handler);
         pause();
         exit(0);
