@@ -19,8 +19,3 @@ tp2/**/*.o
 
 # Ignora cualquier ejecutable 'a.out' recursivamente dentro de tp2
 tp2/**/a.out
-
-# Si generas ejecutables con otros nombres específicos (ej: 'ej1', 'ej2'),
-# necesitarías añadirlos aquí también, o usar una convención.
-# Por ejemplo, si tus ejecutables se llaman igual que el .c pero sin la extensión:
-tp2/**/pid_ej*
