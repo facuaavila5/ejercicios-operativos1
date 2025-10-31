@@ -1,0 +1,98 @@
+🟢 Nivel 1 — Básico (pipes y fork)
+
+Pipe simple (parent → child)
+
+El padre escribe un mensaje en el pipe.
+
+El hijo lo lee e imprime en pantalla.
+
+Pipe doble (comunicación bidireccional)
+
+Dos pipes: uno para padre→hijo y otro hijo→padre.
+
+El hijo responde con el mensaje en mayúsculas.
+
+Fork + execvp (como hicimos recién)
+
+Padre crea un proceso con execvp() y coordina comunicación con pipe.
+
+
+
+🟡 Nivel 2 — Intermedio (FIFOs y señales)
+
+Named FIFO entre dos procesos no relacionados
+
+Crea mkfifo("/tmp/chatfifo").
+
+Proceso A escribe mensajes, proceso B los lee (como un chat simple).
+
+Si se recibe "exit", ambos terminan.
+
+FIFO + señales
+
+Proceso lector instala un handler para SIGUSR1.
+
+Proceso escritor envía la señal cuando escribe algo nuevo.
+
+Lector se “despierta” con la señal y lee del FIFO.
+
+
+
+🔵 Nivel 3 — Avanzado (shared memory, mmap)
+
+Shared memory (SysV o POSIX)
+
+Crea un segmento de memoria compartida.
+
+Proceso A escribe un número creciente cada segundo.
+
+Proceso B lo lee y lo imprime.
+
+Sincronizá con semáforos (sem_open o semget).
+
+mmap compartido
+
+Usa mmap() sobre un archivo temporal.
+
+Varios procesos escriben y leen en esa memoria.
+
+Implementá un pequeño “tablero” de comunicación.
+
+
+
+🔴 Nivel 4 — Experto (combinaciones)
+
+Servidor concurrente con FIFOs o sockets locales
+
+Un “servidor” crea un FIFO común.
+
+Cada cliente escribe un pedido y crea su FIFO personal para recibir respuesta.
+
+El servidor lee los pedidos y responde.
+
+Podés extenderlo con select() para múltiples clientes.
+
+Shared memory + signals
+
+Un proceso produce datos en memoria compartida.
+
+Cuando hay nuevos datos, manda SIGUSR1 a otro proceso.
+
+El receptor lee los datos y los imprime.
+
+mmap + fork
+
+El padre mapea un archivo y escribe información.
+
+Crea varios hijos (fork()), cada uno actualiza una porción del archivo.
+
+Coordiná el acceso con semáforos POSIX (sem_init, sem_wait, sem_post).
+
+
+💡 Consejo
+
+Para aprender realmente IPC:
+
+Usá strace -e trace=read,write,pipe,fork,execve ./programa
+
+Mirá con ipcs, lsof, y ps -ef qué recursos quedan abiertos.
